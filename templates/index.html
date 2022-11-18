@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Miracles Blog</title>
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="css/boostrap.min.css">
     <!-- Required meta tags -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
  
@@ -14,28 +15,204 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <div class=" contaner">
-      <h1>Miracles Blog</h1>
+    {% block body %}
+    <div class="container">
+        <div class="well text-center">
+          <h1>Miracles Blog</h1>
+
+        </div>
+      
     </div>
-<div class="containter">
+<div class="container">
   <div class="row">
-    <div class=""col md="12">
+    <div class="col md=12">
 <h2>Blog List<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#mymodal">
-  Add blog</button></h2>
-<table class="table table-striped">
+  Add blog</button> </h2>
 
-  <tr>
-<th> </th>
-
-  </tr>
-</table>
+<div id="BlogPost">
+  <div class="card border-dark">
+    <div 
+    class="card-header d-flex justify-content-between align-items-canter"
+    > <h2> username </h2>
+  </div>
+  <div class="card-body">
+    <div class="card-text">
+      blog text
+    </div>
+    <div class="card-footer text-muted">
+    author
+    <a heref=""class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit </a>
+    <a heref=""class="btn btn-danger btn-xs" onclick="return confirm('Are You sure you want to delete this blog?')">Delete </a>
     </div>
   </div>
-</div>
+  </div>
+
    
+    </div>
+  </div>
+
+
+  <div id="modaledit" class="modal fade" role="dialog">
+
+
+    <div class="modal-dialog">
+  
+  
+       <div class="modal-content">
+  
+  
+          <div class="modal-header">
+  
+  
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+  
+  
+             <h4 class="modal-title">Update Information</h4>
+  
+  
+          </div>
+  
+  
+          <div class="modal-body">
+  
+  
+             <form action="" method="POST">
+  
+  
+                <div class="form-group">
+  
+  
+                   <label>Blog Name:</label>
+                    <input type="hidden"  name="id" value="">
+  
+                   <input type="text" class="form-control" name="name" value="miracle">
+  
+  
+                </div>
+  
+  
+  
+                <div class="form-group">
+  
+  
+                   <label>Content:</label>
+  
+                   <input type="text" class="form-control" name="email" value="chatgmail">
+  
+  
+                </div>
+  
+  
+                <div class="form-group">
+  
+  
+                   <label>Author:</label>
+  
+                   <input type="text" class="form-control" name="phone" value="math">
+  
+  
+                </div>
+  
+  
+                <div class="form-group">
+  
+  
+                   <button class="btn btn-primary" type="sbumit">Update</button>
+  
+  
+                </div>
+  
+  
+             </form>
+  
+  
+          </div>
+  
+  
+          <div class="modal-footer">
+  
+  
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  
+  
+          </div>
+  
+  
+       </div>
+  
+  
+    </div>
+  
+  
+  </div>
+  
+  <div id="mymodal" class="modal fade" role="dialog">
+
+    <div class="modal-dialog">
+ 
+       <div class="modal-content">
+ 
+          <div class="modal-header">
+ 
+             <button type="button" class="close" data-dismiss="modal">&times;</button>
+ 
+             <h4 class="modal-title">Please Insert Data</h4>
+
+          </div>
+ 
+          <div class="modal-body">
+ 
+             <form action="" method="POST">
+ 
+                <div class="form-group">
+ 
+                   <label>Blog Name:</label>
+                   <input type="text" class="form-control" name="name" required="1">
+ 
+                </div>
+ 
+                 <div class="form-group">
+ 
+                   <label>Content:</label>
+                   <input type="text" class="form-control" name="email" required="1">
+ 
+                </div>
+
+                <div class="form-group">
+ 
+                  <label>Author:</label>
+                  <input type="text" class="form-control" name="email" required="1">
+
+               </div>
+
+                <div class="form-group">
+ 
+                   <button class="btn btn-primary" type="submit">Insert Data</button>
+ 
+                </div>
+ 
+             </form>
+ 
+          </div>
+ 
+          <div class="modal-footer">
+
+             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 
+          </div>
+ 
+       </div>
+ 
+    </div>
+ 
+ </div>
+</div>
+
+{% endblock %}
     <div class="well">
-      <h3>Website:https://mchatblog.herokuapp.com/</h3>
+      <h3>Website:https://mchatblog.herokuapp.com/
       <span class="pull-right">Like us on Twitter</span>
+    </h3>
     </div>
 
     <!-- Optional JavaScript -->
@@ -46,4 +223,3 @@
   </body>
   
 </html>
-
