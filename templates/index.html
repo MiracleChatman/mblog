@@ -26,30 +26,27 @@
 <div class="container">
   <div class="row">
     <div class="col md=12">
-<h2>Blog List<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#mymodal">
-  Add blog</button> </h2>
-
+      <h2>Blog List<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#mymodal"> Add blog</button> </h2>
+<ul style="list-style-type:none;">
 <div id="BlogPost">
   <div class="card border-dark">
-    <div 
-    class="card-header d-flex justify-content-between align-items-canter"
-    > <h2> username </h2>
-  </div>
-  <div class="card-body">
-    <div class="card-text">
-      blog text
+    <div class="card-header d-flex justify-content-between align-items-canter"> 
+      <li><h2> username </h2></li>
     </div>
-    <div class="card-footer text-muted">
-    author
-    <a heref=""class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit </a>
-    <a heref=""class="btn btn-danger btn-xs" onclick="return confirm('Are You sure you want to delete this blog?')">Delete </a>
-    </div>
-  </div>
-  </div>
-
-   
+    <div class="card-body">
+      <div class="card-text">
+       <li>blog text </li>
+      </div>
+      <div class="card-footer text-muted">
+        <li>author</li>
+       <a heref=""class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit </a>
+       <a heref=""class="btn btn-danger btn-xs" onclick="return confirm('Are You sure you want to delete this blog?')">Delete </a>
+      </div>
     </div>
   </div>
+  </ul>
+</div>
+</div>
 
 
   <div id="modaledit" class="modal fade" role="dialog">
@@ -85,7 +82,7 @@
                    <label>Blog Name:</label>
                     <input type="hidden"  name="id" value="">
   
-                   <input type="text" class="form-control" name="name" value="miracle">
+                   <input type="text" class="form-control" name="blogname" value="miracle">
   
   
                 </div>
@@ -97,7 +94,7 @@
   
                    <label>Content:</label>
   
-                   <input type="text" class="form-control" name="email" value="chatgmail">
+                   <input type="text" class="form-control" name="content" value="chatgmail">
   
   
                 </div>
@@ -108,7 +105,7 @@
   
                    <label>Author:</label>
   
-                   <input type="text" class="form-control" name="phone" value="math">
+                   <input type="text" class="form-control" name="author" value="math">
   
   
                 </div>
@@ -167,21 +164,21 @@
                 <div class="form-group">
  
                    <label>Blog Name:</label>
-                   <input type="text" class="form-control" name="name" required="1">
+                   <input type="text" class="form-control" name="blogname" required="1">
  
                 </div>
  
                  <div class="form-group">
  
                    <label>Content:</label>
-                   <input type="text" class="form-control" name="email" required="1">
+                   <input type="text" class="form-control" name="content" required="1">
  
                 </div>
 
                 <div class="form-group">
  
                   <label>Author:</label>
-                  <input type="text" class="form-control" name="email" required="1">
+                  <input type="text" class="form-control" name="author" required="1">
 
                </div>
 
