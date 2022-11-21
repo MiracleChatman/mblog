@@ -1,12 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_mysqldb import MySQL
+from peewee import *
+import sqlite3
 
-app.config('MySQL_HOST') = 'localhost'
-app.config('MySQL_USER') = 'root'
-app.config('MySQL_PASSWORD') = 'localhost'
-app.config('MySQL_DB') = 'blogapplication'
+conn = sqlite3.connect('post')
+cur = conn.cursor()
 
-mysql= MySQL(mblog)
+posts ='''CREATE TABLE POST(
+   blogname CHAR(225) NOT NULL,
+   content TEXT(),
+   author CHAR(225),
+)'''
+cur.execute('posts')
+cur.execute('''INSERT INTO POST( blogname, content, author) VALUES  ('the best post', 'this is my first blog post', 'miracle')''')
+conn.commit()
+
 
 app = Flask(__name__)
 
@@ -15,18 +22,18 @@ def Index():
     return render_template('index.html')
 
 @app.route('/insert', methods = ['POST'])
-def insert():
-
-    if request.method == "POST":
+def add_post():
+    if request.method == 'POST':
         flash("Data Inserted Successfully")
-        name = request.form['blogname']
+        blogname = request.form['blogname']
         content = request.form['content']
-        author = request.form['author']
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO students (name, email, phone) VALUES (%s, %s, %s)", (name, email, phone))
-        mysql.connection.commit()
+        author= request.form['author']
+        Post.create()
+
         return redirect(url_for('Index'))
 
 if __name__ == '__main__':
+    app.secret_key = 'super secret key'
     app.debug=True
+    initialize()
     app.run()
