@@ -1,39 +1,75 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from peewee import *
 import sqlite3
+from peewee import *
 
-conn = sqlite3.connect('post')
-cur = conn.cursor()
-
-posts ='''CREATE TABLE POST(
-   blogname CHAR(225) NOT NULL,
-   content TEXT(),
-   author CHAR(225),
-)'''
-cur.execute('posts')
-cur.execute('''INSERT INTO POST( blogname, content, author) VALUES  ('the best post', 'this is my first blog post', 'miracle')''')
-conn.commit()
 
 
 app = Flask(__name__)
+app.secret_key = 'many random bytes'
+
 
 @app.route('/')
 def Index():
-    return render_template('index.html')
+    con=sqlite3.connect('post.db')
+    cur = con.cursor()
+    cur.execute("select * from post")
+    data = cur.fetchall()
+    return render_template('index.html', post=data)
 
 @app.route('/insert', methods = ['POST'])
 def add_post():
     if request.method == 'POST':
-        flash("Data Inserted Successfully")
-        blogname = request.form['blogname']
-        content = request.form['content']
-        author= request.form['author']
-        Post.create()
+        try:
+            blogname = request.form['blogname']
+            content = request.form['content']
+            author= request.form['author']
+            with sqlite3.connect('post.db') as con:
+                cur = con.cursor()
+                cur.execute("INSERT into post (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+                con.commit()
+                flash("Data Inserted Successfully")
+        except:
+            con.rollback()
+            flash("cant add the post to the list")
+        finally:
+            return redirect(url_for('Index'))
+            con.close()
 
+@app.route('/delete/<string:id_data>', methods = ['GET'])
+def delete(id):
+    with sqlite3.connect("post.db") as con:
+        try:
+            cur =  con.cursor()
+            cur.execute("delete from post where id = ?",id)
+            flash("Record Has Been Deleted Successfully")
+            sqlite3.connect.commit()
+        except: 
+            flash("cant be deleted")
+        finally:
+            return redirect(url_for('Index'))  
+
+@app.route('/update',methods=['POST','GET'])
+def update():
+
+    if request.method == 'POST':
+        try:
+            id_data= request.form['id']
+            blogname = request.form['blogname']
+            content = request.form['content']
+            author= request.form['author']
+            with sqlite3.connect('post.db') as con:
+                cur = con.cursor()
+                cur.execute("update post set (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+                con.commit()
+                flash("Data updated Successfully")
+        except:
+            con.rollback()
+            flash("cant update the post to the list")
+        finally:
+            return redirect(url_for('Index'))
+            con.close()
         return redirect(url_for('Index'))
 
 if __name__ == '__main__':
-    app.secret_key = 'super secret key'
     app.debug=True
-    initialize()
     app.run()
