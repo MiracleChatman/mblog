@@ -2,17 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 from peewee import *
 
-import sqlite3
-con = sqlite3.connect('blogpost.db')
-print("database opened successfully")
-con.execute("create table Blogposts (id INTEGER PRIMARY KEY AUTOINCREMENT, blogname TEXT NOT NULL, content TEXT NOT NULL, author TEXT NOT NULL)")
-print("table created successfully")
-con.close
-
 app = Flask(__name__)
-app.secret_key = 'many random bytes'
 con = sqlite3.connect('blogpost.db')
 con.close
+app.secret_key = 'many random bytes'
+
 
 @app.route('/')
 def Index():
