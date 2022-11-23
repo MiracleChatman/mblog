@@ -12,6 +12,7 @@ con.close
 @app.route('/')
 def Index():
     con=sqlite3.connect('post.db')
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
     cur.execute("select * from Posts")
     data = cur.fetchall()
@@ -37,15 +38,14 @@ def add_post():
             con.close()
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
-def delete(id):
+def delete():
 
-    id= request.form['id']
+    id_data = request.form['id']
     with sqlite3.connect("post.db") as con:
         try:
             cur =  con.cursor()
-            cur.execute("delete from Posts where id = ?",id)
+            cur.execute("delete from Posts where id = ?",id_data)
             flash("Record Has Been Deleted Successfully")
-            sqlite3.connect.commit()
         except: 
             flash("cant be deleted")
         finally:
@@ -55,23 +55,21 @@ def delete(id):
 def update():
     if request.method == 'POST':
         try:
-            id_data= request.form['id']
             blogname = request.form['blogname']
             content = request.form['content']
             author= request.form['author']
             with sqlite3.connect('post.db') as con:
                 cur = con.cursor()
-                cur.execute("update Posts set (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+                cur.execute("UPDATE Posts SET (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
                 con.commit()
-                flash("Data updated Successfully")
+                flash("Data Inserted Successfully")
         except:
             con.rollback()
-            flash("cant update the post to the list")
+            flash("cant add the post to the list")
         finally:
             return redirect(url_for('Index'))
             con.close()
         return redirect(url_for('Index'))
-
 if __name__ == '__main__':
     app.debug=True
     app.run()

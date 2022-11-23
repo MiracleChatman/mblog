@@ -71,7 +71,7 @@
     </div>
   </div>
   </ul>
-{% for row in posts %}
+{% for row in rows %}
 <ul style="list-style-type:none;">
    <div id="BlogPost">
      <div class="card border-dark">
@@ -85,7 +85,7 @@
          <div class="card-footer text-muted">
            <li>{{row.2}} </li>
            <li>
-          <a href="/update/{{ row.0 }}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+          <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
           <a heref="/delete/{{ row.0 }}"class="btn btn-danger btn-xs" onclick="return confirm('Are You sure you want to delete this blog?')">Delete </a>
          </li>
          </div>
