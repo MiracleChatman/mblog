@@ -50,43 +50,22 @@
         {%endif%}
         {%endwith%}
 
-
-<ul style="list-style-type:none;">
-<div id="BlogPost">
-  <div class="card border-dark">
-    <div class="card-header d-flex justify-content-between align-items-canter"> 
-      <li><h2> title </h2></li>
-    </div>
-    <div class="card-body">
-      <div class="card-text">
-       <li>blog text </li>
-      </div>
-      <div class="card-footer text-muted">
-        <li>author</li>
-        <li>
-         <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
-         <a href="" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
-   </li>
-      </div>
-    </div>
-  </div>
-  </ul>
 {% for row in rows %}
 <ul style="list-style-type:none;">
    <div id="BlogPost">
      <div class="card border-dark">
        <div class="card-header d-flex justify-content-between align-items-canter"> 
-         <li><h2> {{row.0}} </h2></li>
+         <li><h2> {{row['blogname']}} </h2></li>
        </div>
        <div class="card-body">
          <div class="card-text">
-          <li>{{row.1}}  </li>
+          <li>{{row['content']}}  </li>
          </div>
          <div class="card-footer text-muted">
-           <li>{{row.2}} </li>
+           <li>{{row['author']}} </li>
            <li>
-          <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
-          <a heref="/delete/{{ row.0 }}"class="btn btn-danger btn-xs" onclick="return confirm('Are You sure you want to delete this blog?')">Delete </a>
+            <a href="/update/{{row['id']}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row['id']}}">Edit</a>
+            <a href="/delete/{{ row['id'] }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
          </li>
          </div>
          </div>
@@ -98,7 +77,7 @@
 
 
 
-  <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+  <div id="modaledit{{row['id']}}" class="modal fade" role="dialog">
 
 
     <div class="modal-dialog">
@@ -129,9 +108,9 @@
   
   
                    <label>Blog Name:</label>
-                    <input type="hidden"  name="id" value="{{ row.0 }}">
+                    <input type="hidden"  name="id" value="{{row['id']}}">
   
-                   <input type="text" class="form-control" name="blogname" value="{{ row.1 }}}}">
+                   <input type="text" class="form-control" name="blogname" value="{{row['blogname']}}">
   
   
                 </div>
@@ -143,7 +122,7 @@
   
                    <label>Content:</label>
   
-                   <input type="text" class="form-control" name="content" value="{{row.2}}}}">
+                   <input type="text" class="form-control" name="content" value="{{row['content']}}">
   
   
                 </div>
@@ -154,7 +133,7 @@
   
                    <label>Author:</label>
   
-                   <input type="text" class="form-control" name="author" value="{{row.3}}">
+                   <input type="text" class="form-control" name="author" value="{{row['author']}}">
   
   
                 </div>
