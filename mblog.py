@@ -6,15 +6,16 @@ from peewee import *
 
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
-
+con = sqlite3.connect('post.db')
+con.close
 
 @app.route('/')
 def Index():
     con=sqlite3.connect('post.db')
     cur = con.cursor()
-    cur.execute("select * from post")
+    cur.execute("select * from Posts")
     data = cur.fetchall()
-    return render_template('index.html', post=data)
+    return render_template('index.html', posts=data)
 
 @app.route('/insert', methods = ['POST'])
 def add_post():
@@ -25,7 +26,7 @@ def add_post():
             author= request.form['author']
             with sqlite3.connect('post.db') as con:
                 cur = con.cursor()
-                cur.execute("INSERT into post (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+                cur.execute("INSERT into Posts (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
                 con.commit()
                 flash("Data Inserted Successfully")
         except:
@@ -37,10 +38,12 @@ def add_post():
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
 def delete(id):
+
+    id= request.form['id']
     with sqlite3.connect("post.db") as con:
         try:
             cur =  con.cursor()
-            cur.execute("delete from post where id = ?",id)
+            cur.execute("delete from Posts where id = ?",id)
             flash("Record Has Been Deleted Successfully")
             sqlite3.connect.commit()
         except: 
@@ -50,7 +53,6 @@ def delete(id):
 
 @app.route('/update',methods=['POST','GET'])
 def update():
-
     if request.method == 'POST':
         try:
             id_data= request.form['id']
@@ -59,7 +61,7 @@ def update():
             author= request.form['author']
             with sqlite3.connect('post.db') as con:
                 cur = con.cursor()
-                cur.execute("update post set (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+                cur.execute("update Posts set (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
                 con.commit()
                 flash("Data updated Successfully")
         except:
