@@ -2,7 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 from peewee import *
 
-
+import sqlite3
+con = sqlite3.connect('blogpost.db')
+print("database opened successfully")
+con.execute("create table Blogposts (id INTEGER PRIMARY KEY AUTOINCREMENT, blogname TEXT NOT NULL, content TEXT NOT NULL, author TEXT NOT NULL)")
+print("table created successfully")
+con.close
 
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
@@ -21,28 +26,23 @@ def Index():
 @app.route('/insert', methods = ['POST'])
 def add_post():
     if request.method == 'POST':
-        try:
-            blogname = request.form['blogname']
-            content = request.form['content']
-            author= request.form['author']
-            with sqlite3.connect('blogpost.db') as con:
-                cur = con.cursor()
-                cur.execute("INSERT into Blogposts (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
-                con.commit()
-                flash("Data Inserted Successfully")
-        except:
-            con.rollback()
-            flash("cant add the post to the list")
-        finally:
-            return redirect(url_for('Index'))
-            con.close()
+        blogname = request.form['blogname']
+        content = request.form['content']
+        author= request.form['author']
+        with sqlite3.connect('blogpost.db') as con:
+            cur = con.cursor()
+            cur.execute("INSERT into Blogposts (blogname, content, author) VALUES (?,?,?)",(blogname, content, author))
+            con.commit()
+            flash("Data Inserted Successfully")
+        return redirect(url_for('Index'))
+        con.close()
 
 @app.route('/delete/<string:id_data>', methods = ['GET'])
 def delete(id_data):
     with sqlite3.connect("blogpost.db") as con:
         try:
             cur = con.cursor()
-            cur.execute("delete from Blogposts where id = ?",id_data)
+            cur.execute("delete from Blogposts where id = ?", (id_data,))
             flash("Record Has Been Deleted Successfully")
         except:
             flash("can't be deleted")

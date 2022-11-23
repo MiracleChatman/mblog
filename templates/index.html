@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>Miracles Blog</title>
-    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="css/boostrap.min.css">
+    <link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Required meta tags -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
  
@@ -15,14 +15,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    {% block body %}
+    
     <div class="container">
         <div class="well text-center">
           <h1>Miracles Blog</h1>
 
         </div>
-      
-    </div>
+        <link href="{{url_for('static', filename = 'css/bootstrap.min.css')}}" rel="stylesheet">
+        {% block body %}
 <div class="container">
   <div class="row">
     <div class="col md=12">
@@ -71,7 +71,7 @@
          </div>
        </div>
      </div>
-     
+   
 
 
 
@@ -170,9 +170,9 @@
   
   
   </div>
-
-  {% endfor  %}
 </ul>
+  {% endfor  %}
+
 </div>
 
 
